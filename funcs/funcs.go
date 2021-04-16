@@ -1,16 +1,22 @@
 package funcs
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/levigross/grequests"
 	"github.com/mainak90/GitGists/models"
+	"net/http"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
 var GITHUB_TOKEN = os.Getenv("GITHUB_TOKEN")
-var requestOptions = &grequests.RequestOptions{Auth: []string{GITHUB_TOKEN, "x-oauth-basic"}}
+var tokenize = func (GITHUB_TOKEN string) string {
+	return fmt.Sprintf("token %s", GITHUB_TOKEN)
+}(GITHUB_TOKEN)
+var requestOptions = &grequests.RequestOptions{Headers: map[string]string{"Accept": "application/vnd.github.v3+json", "Authorization": tokenize}}
 
 func GetStats(url string) *grequests.Response {
 	resp, err := grequests.Get(url, requestOptions)
@@ -42,4 +48,22 @@ func CreateGithubGist(url string, args []string) *grequests.Response {
 		log.Println("Error encountered: ", err)
 	}
 	return resp
+}
+
+func NewRepo(repoUrl, repo string) models.CreateResponse {
+	var descmsg = fmt.Sprintf("This is the generic repo description for %s", repo)
+	var bodyreq = models.RepoRequest{Name: repo, Description: descmsg, Homepage: "https://github.com", Private:false}
+	var postbody, _ = json.Marshal(bodyreq)
+	var jsonStr = []byte(postbody)
+	req, err := http.NewRequest("POST", repoUrl, bytes.NewBuffer(jsonStr))
+	req.Header.Set("Accept", "application/vnd.github.v3+json")
+	req.Header.Set("Authorization", tokenize)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return models.CreateResponse{Status:resp.Status, Body:string(body)}
 }

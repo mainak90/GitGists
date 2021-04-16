@@ -4,7 +4,7 @@
 
 [ How to run ](#How to run)
 
-[ Sample output](#Sample output)
+[ Sample output ](#Sample output)
 
 
 ## What is this?

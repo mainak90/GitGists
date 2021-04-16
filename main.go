@@ -55,6 +55,27 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name:    "newrepo",
+			Aliases: []string{"n"},
+			Usage:   "create new repo. [Usage]: goTool newrepo <user> <repo>",
+			Action: func(c *cli.Context) error {
+				if c.NArg() > 0 {
+					// Github API Logic
+					argset := c.Args()
+					var repoUrl string
+					repoUrl = fmt.Sprintf("https://api.github.com/user/repos")
+					log.Println("Repourl: ", repoUrl)
+					reponame := fmt.Sprintf("%s", argset.Get(1))
+					log.Println("Reponame: ", reponame)
+					resp := funcs.NewRepo(repoUrl, reponame)
+					log.Println(resp)
+				} else {
+					log.Println("Please give a username and a reponame. See -h to see help")
+				}
+				return nil
+			},
+		},
 	}
 
 	app.Version = "1.0"
