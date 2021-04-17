@@ -9,9 +9,9 @@
 
 ## What is this?
 Strip api.github.com` metadata to retreive repository information
-by user name`
-Now it can `Create a new repo` or `Create a lot of repos from a file`
-Now it can `Inject a webhook in a repo` or `Concurrently inject lots of webhooks into lots of repos`
+by user name`\
+Now it can `Create a new repo` or `Create a lot of repos from a file`\
+Now it can `Inject a webhook in a repo` or `Concurrently inject lots of webhooks into lots of repos`\
 
 ## How to build
 ```
