@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "name": "GitGists",
+      "owner": "mainak90",
+      "hook": "https://www.example.com/hook"
+    },{
+      "name": "terraform-provider-mysql",
+      "owner": "mainak90",
+      "hook": "https://www.example.com/hook"
+    },{
+      "name": "consul-service-replica-count",
+      "owner": "mainak90",
+      "hook": "https://www.example.com/hook"
+    }
+  ]
+}

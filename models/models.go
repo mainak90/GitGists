@@ -1,6 +1,5 @@
 package models
 
-
 type Repo struct {
 	ID       int    `json:"id"`
 	Name     string `json:"name"`
@@ -29,4 +28,20 @@ type RepoRequest struct {
 type CreateResponse struct {
 	Status string `json:"status"`
 	Body   string `json:"body"`
+}
+
+type Config struct {
+	Url          string   `json:"url"`
+	Content_Type string   `json:"content_type"`
+	Secret 		 string   `json:"secret"`
+}
+
+type WebhookEach struct {
+	Name  string `json:"name"`
+	Owner string  `json:"owner"`
+	Hook  string  `json:"hook"`
+}
+
+type WebhookList struct {
+	Entries []WebhookEach `json:"entries"`
 }

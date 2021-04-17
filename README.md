@@ -10,6 +10,8 @@
 ## What is this?
 Strip api.github.com` metadata to retreive repository information
 by user name`
+Now it can `Create a new repo` or `Create a lot of repos from a file`
+Now it can `Inject a webhook in a repo` or `Concurrently inject lots of webhooks into lots of repos`
 
 ## How to build
 ```
@@ -17,10 +19,48 @@ go build main.go
 ```
 
 ## How to run
+#### List all the repositories under user
 ```
 ./main f <githubusername>
 viz: ./main f mainak90
 ```
+
+#### Create a gist inside your account
+```
+./main create <name> <description> <text-file>
+viz: ./main create testdoc "test document" file.txt
+```
+
+#### Create a new repo inside your authenticated account
+```
+./main newrepo <reponame>
+viz: ./main newrepo test-repo
+```
+
+#### Create a list of repos(empty) in your autheticated github account
+This repo file should be a text document with newline seperated list of repos.
+```
+./main newrepos <repo-file-path>
+./main newrepos tests/repos.txt
+```
+
+#### Setup a webhook inside a github repo(Authenticated)
+```
+./main pushwebhook <owner> <repo> <hookurl>
+./main pushwebhook mainak90 GitGists https://www.example.com/hook
+```
+
+#### Setup webhooks inside a lot of repos via a json file
+This one needs a properly formatted json document that has a the structure defined on `tests/hooklist.json`
+Please refer to struct `models.WebhookList` to get the gist of things.
+```
+./main pushwebhooks <json-file-path>
+./main pushwebhooks tests/hooklist.json
+```
+
+#### Get all repos from a GitHub organization
+WIP...
+
 
 ## Sample output
 ```
