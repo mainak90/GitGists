@@ -196,7 +196,7 @@ func (c *HookRequest)CreateWebHookConq(url string, ch chan<-string) {
 	ch <- fmt.Sprintf("Done! Webhook created for : %s", url)
 }
 
-func GetOrgRepos(org string) interface{} {
+func GetOrgRepos(org string) []byte {
 	url := fmt.Sprintf("https://api.github.com/orgs/%s/repos", org)
 	req, _ := http.NewRequest("GET", url,nil)
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
@@ -208,6 +208,7 @@ func GetOrgRepos(org string) interface{} {
 		panic(err)
 	}
 	defer resp.Body.Close()
-	return resp.Body
+	data, _ := ioutil.ReadAll(resp.Body)
+	return data
 }
 

@@ -26,7 +26,7 @@ func main() {
 					repoUrl = fmt.Sprintf("https://api.github.com/users/%s/repos", user.Get(0))
 					resp := funcs.GetStats(repoUrl)
 					resp.JSON(&repos)
-					log.Println(repos)
+					fmt.Println(repos)
 				} else {
 					log.Println("Please give a username. See -h to see help")
 				}
@@ -48,7 +48,7 @@ func main() {
 					var postUrl string
 					postUrl = "https://api.github.com/gists"
 					resp := funcs.CreateGithubGist(postUrl, args)
-					log.Println(resp.String())
+					fmt.Println(resp.String())
 				} else {
 					log.Println("Please give sufficient arguments. See -h to see help")
 				}
@@ -69,7 +69,7 @@ func main() {
 					reponame := fmt.Sprintf("%s", argset.Get(0))
 					log.Println("Reponame: ", reponame)
 					resp := funcs.NewRepo(repoUrl, reponame)
-					log.Println(resp)
+					fmt.Println(resp)
 				} else {
 					log.Println("Please give a username and a reponame. See -h to see help")
 				}
@@ -129,6 +129,22 @@ func main() {
 					c.CreateWebHooks(argset.Get(0))
 				} else {
 					log.Println("Please provide a <owner> <repo> <payload>. See -h to see help")
+				}
+				return nil
+			},
+		},
+		{
+			Name:    "listorgrepos",
+			Aliases: []string{"lo"},
+			Usage:   "Print a list of repositories in an organization. [Usage]: goTool listorgrepos <org-name>",
+			Action: func(c *cli.Context) error {
+				if c.NArg() == 1 {
+					// Github API Logic
+					argset := c.Args()
+					output := funcs.GetOrgRepos(argset.Get(0))
+					fmt.Println(string(output))
+				} else {
+					log.Println("Please provide a <org-name>. See -h to see help")
 				}
 				return nil
 			},

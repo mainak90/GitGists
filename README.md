@@ -59,7 +59,12 @@ Please refer to struct `models.WebhookList` to get the gist of things.
 ```
 
 #### Get all repos from a GitHub organization
-WIP...
+Creates a json-string output of all repositories under an organization.\
+If it generates a very large file, its best to output redirect it to a json file.
+```
+./main listorgrepos <org-name>
+viz: ./main listorgrepos <orgname> > <filename>.json
+```
 
 
 ## Sample output
